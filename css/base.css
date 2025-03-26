@@ -1,0 +1,13 @@
+* {
+    box-sizing: border-box;
+}
+
+body, main{
+    font-family: Arial;
+    margin: 0;
+    padding: 0;
+}
+
+.main {
+    margin-top: 3em;
+}
