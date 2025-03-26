@@ -14,10 +14,10 @@
 <body class="main">
     <div class="main-element welcome">
             <div class="left">
-                <img src="/assets/kars.png" alt="Image">
+                <img src="/assets/icons/kars.png" alt="Image">
             </div>
             <div class="right">
-                <p>Welcome text here</p>
+                <p>Welcome to my bla bla bla</p>
             </div>
     </div>
 

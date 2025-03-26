@@ -1,0 +1,6 @@
+img, video {
+    min-width: 10em; max-width: 40vw;
+    min-height: 10em; max-height: 40vh;
+
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+}

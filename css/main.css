@@ -1,31 +1,17 @@
+/* Main CSS elements*/
+
 .main-element {
-    margin: auto; margin-block: 2em; padding: 1em;
-    width: 70vw;
+    margin: auto; margin-block: 2em; padding-inline: 0.75em; padding-block: 0.5em;
+    width: 80vw;
 
     background-color: var(--secondary);
     border: 1px solid var(--accent);
     border-radius: var(--main-br-radius);
-}
-
-.centre {
-    text-align: center;
-}
-
-
-
-.left-home {
-    width: 30%;
-    aspect-ratio : 1 / 1;
-    border:1px solid red;
-}
-
-.right-home {
-    width: 70%;
-    margin: auto;
     
+    box-shadow: 4px 4px 20px rgba(0, 0, 0, 0.4);
 }
 
-.flex {
-    display: flex;
-    justify-content: space-between;
+.welcome {
+    width: 90vw !important;
 }
+

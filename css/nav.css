@@ -1,14 +1,15 @@
 nav {
     position: absolute;
+    padding-inline: 0.5em;
     top: 0;
     z-index: 1000;
     height: 3em;
     width:100vw;
-    background-color: #333;
+    background-color: var(--secondary);
 }
 
 nav * {
     display: inline;
     line-height: 3em;
-    margin: 1em;
+    margin: 0.25em;
 }

@@ -13,13 +13,18 @@
 <body class="main">
     <div class="main-element welcome">
         <h1>Hi all,</h1>
-        <p>This is a page to showcase a few of my public projects ranging from personal to collaborative</p>
+        <p>This is a page to showcase a few of my public projects ranging from personal to collaborative. you can see the <a href="roadmaps.php">roadmaps for the projects here</a></p>
     </div>
 
-    <main-element>
+    <div class="main-element">
+        <h2>/Kars</h2>
+        <p>This site</p>
+    </div>
 
-    
-    </main-element>
+    <div class="main-element">
+        <h2>/Mr-Kitty-Archive</h2>
+        <p>Mr-Kitty-Archive [MKA for short] is a site im currently developing with the purpose of listing and hosting music of a certain artist along with information. </p>
+    </div>
 
 
 </body>

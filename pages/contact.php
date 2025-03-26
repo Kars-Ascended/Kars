@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="../css/index-img.css">
     <link rel="stylesheet" href="../css/main.css">
     <link rel="stylesheet" href="../css/nav.css">
-    <title>TEMPLATE</title>
+    <title>Contact</title>
     <?php include '../backend/reuse/nav.php'; ?>
 </head>
 
@@ -17,7 +17,7 @@
         <p>For x, y, z, a, b, and c you can find me under the name:</p>
         <b>'kars_ascended'</b>
         <p>you may find me with the following links for other sites.</p>
-        <a>Example</a>, <a>Another example</a>, <a>Etc...</a>
+        <p><a>Example</a>, <a>Another example</a>, <a>Etc...</a></p>
     </div>
 
 </body>
