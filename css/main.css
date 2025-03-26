@@ -2,11 +2,30 @@
     margin: auto; margin-block: 2em; padding: 1em;
     width: 70vw;
 
-    background-color: var(--main-element);
+    background-color: var(--secondary);
     border: 1px solid var(--accent);
     border-radius: var(--main-br-radius);
 }
 
 .centre {
     text-align: center;
+}
+
+
+
+.left-home {
+    width: 30%;
+    aspect-ratio : 1 / 1;
+    border:1px solid red;
+}
+
+.right-home {
+    width: 70%;
+    margin: auto;
+    
+}
+
+.flex {
+    display: flex;
+    justify-content: space-between;
 }
