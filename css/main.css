@@ -1,0 +1,12 @@
+.main-element {
+    margin: auto; margin-block: 2em; padding: 1em;
+    width: 70vw;
+
+    background-color: var(--main-element);
+    border: 1px solid var(--accent);
+    border-radius: var(--main-br-radius);
+}
+
+.centre {
+    text-align: center;
+}

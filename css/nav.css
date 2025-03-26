@@ -6,3 +6,9 @@
     width:100vw;
     background-color: #333;
 }
+
+.nav * {
+    display: inline;
+    line-height: 3em;
+    margin: 1em;
+}
