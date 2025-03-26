@@ -38,3 +38,7 @@ a {
 img {
     border-radius: var(--main-br-radius-x2);
 }
+
+.welcome {
+    width: 90vw !important;
+}

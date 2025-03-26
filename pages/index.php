@@ -22,8 +22,7 @@
     </div>
 
     <div class="main-element">
-        <p>example div</p> <a class="button">button test</a>
-        <p class="button">button test</p>
+        <h2>DISCLAIMER</h2><p>This is not a professional portfolio. It may be used as one but there are elements to this site that do not fall under this, this website is more a 'showcase' of things 😁</p>
     </div>
 
     <div class="main-element">
