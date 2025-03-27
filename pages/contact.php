@@ -14,10 +14,15 @@
 <body class="main">
     <div class="main-element">
         <h1>Connections [not linked yet]</h1>
-        <p>For x, y, z, a, b, and c you can find me under the name:</p>
-        <b>'kars_ascended'</b>
+        <p>I can be found under the name <b>'Kars_Ascended'</b> or <b>'Kars-Ascended'</b> on the following platforms:</p>
+        <ul>
+            <li>First item</li>
+            <li>Second item</li>
+            <li>Third item</li>
+        </ul>
+        
         <p>you may find me with the following links for other sites.</p>
-        <p><a>Example</a>, <a>Another example</a>, <a>Etc...</a></p>
+        <p><a href="https://www.linkedin.com/in/josh---white/" target="_blank">LinkedIn</a>, <a>Another example</a>, <a>Another example</a></p>
     </div>
 
 </body>
