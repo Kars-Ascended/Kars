@@ -17,7 +17,7 @@
                 <img src="/assets/icons/kars.png" alt="Image">
             </div>
             <div class="right">
-                <p>Welcome to my bla bla bla</p>
+                <p>Hey, welcome to my website</p>
             </div>
     </div>
 

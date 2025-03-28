@@ -1,3 +1,5 @@
+<!-- Dont update the links to reflect .htaccess, remote working ruins it -->
+
 <nav>
     <a class="button" href="/pages/index.php">Home</a>
     <a class="button" href="/pages/projects.php">Projects</a>
