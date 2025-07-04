@@ -1,0 +1,177 @@
+/* Base Styles */
+:root {
+    /* Global Values*/
+    --main-br-radius: 7px;
+    --main-br-radius-x2: 14px;
+    --box-shadow: 4px 4px 20px rgba(0, 0, 0, 0.5);
+
+    --main: #1E1B1B;            /* Dark gray with a red undertone */
+    --secondary: #2A2323;       /* Slightly lighter gray with red tint */
+    --accent: #8B4C4C;          /* Muted/desaturated red (like dusty rose or mauve) */
+    --accent-secondary: #A35C5C;/* Softer, lighter red accent */
+    --white: #F8F5F5;           /* Warm gray-white */
+   
+}
+
+/* Global Reset */
+*, *::before, *::after {
+    box-sizing: border-box !important;
+    color: var(--white);
+}
+
+table *, table *::before, table *::after {
+    color: inherit;
+}
+
+/* Base Elements */
+body {
+    margin-left: 4em;
+    font-family: Arial;
+    padding-left: 0.5em !important;
+    min-height: calc(100vh - 4.5em);
+    background-color: var(--main);
+    background-size: 100% auto;
+    background-repeat: no-repeat;
+    background-position: top center;
+}
+
+@media only screen and (max-width: 768px) {
+    body {
+        margin:0;
+        margin-top: 3.5em !important;
+        padding-left: 0em !important;
+    }
+}
+
+/* Form Elements */
+input, select, .button, .main {
+    border-radius: 0.5em;
+    padding: 0.4em;
+    background-color: var(--secondary);
+    border: 1px solid var(--accent);
+    cursor: pointer;
+}
+
+/* Buttons */
+[button], button {
+    background-color: var(--accent) !important;
+    border: none;
+    padding: 0.5em;
+    border-radius: var(--main-br-radius);
+    cursor: pointer;
+}
+
+:not(nav) button {
+    background-color: var(--secondary) !important;
+    border: 1px solid var(--accent) !important;
+}
+
+[button]:hover {
+    transition: all 0.1s ease-in-out;
+    scale: 1.05;
+}
+
+/* Links */
+a:not([button]) {
+    color: var(--accent-secondary)
+}
+
+/* Images */
+img {
+    border-radius: var(--main-br-radius-x2);
+}
+
+/* Utility Classes */
+.flex {
+    display: flex;
+    justify-content: space-between;
+}
+
+*[center] {
+    text-align: center;
+}
+
+/* Main Content */
+main-element {
+    display: block;
+    margin: auto;
+    margin-block: 2em;
+    padding-inline: 0.75em;
+    padding-block: 0.5em;
+    width: 80vw;
+    background-color: var(--secondary);
+    border: 1px solid var(--accent);
+    border-radius: var(--main-br-radius);
+    box-shadow: var(--box-shadow);
+}
+
+@media only screen and (max-width: 768px) {
+    main-element.welcome {
+        width: 100vw !important;
+        border-inline: 0 !important;
+    }
+
+    main-element {
+        width: 95vw !important;
+    }
+}
+
+/* Welcome Section */
+.welcome {
+    width: 90vw !important;
+    display: flex;
+    flex-direction: row; /* Ensure horizontal layout */
+    align-items: center; /* Vertically center children */
+    background-image: url('../assets/banner.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    position: relative; /* Needed for overlay */
+    h1 {
+    }
+}
+
+.welcome .left {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+.welcome .left img {
+    height: 100%;
+    width: auto;
+    border-radius: var(--main-br-radius-x2);
+}
+
+.welcome .right {
+    flex: 1 1 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    text-align: center;
+}
+
+.welcome::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.6); /* Adjust opacity as needed */
+    z-index: 0;
+    pointer-events: none;
+    border-radius: inherit;
+}
+
+.welcome > * {
+    position: relative;
+    z-index: 1;
+}
+
+[title] {
+    margin-inline: auto;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
