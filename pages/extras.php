@@ -16,12 +16,6 @@
             <li><a href="https://soundcloud.com/kars_ascended" target="_blank" rel="noopener">SoundCloud</a></li>
             <li><a href="https://open.spotify.com/artist/2gHZOLy93l7IwyTndfNxQK?si=de-nAJ-3R0SB2D1BAyIGMA" target="_blank" rel="noopener">Spotify</a></li>
         </ul>
-        <h1>Info for spotify verification</h1>
-        <ul>
-            <li>Email - whitejosh429@gmail.com</li>
-            <li>Name - "Josh White"</li>
-        </ul>
-        <p>All online profiles link back to this site.</p>
     </main-element>
 </body>
 </html>
