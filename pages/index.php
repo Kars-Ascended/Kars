@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <?php include '../backend/meta-include.php'; ?>
-    <title>Kars's Site</title>
+    <title>Kars' Site</title>
     <style>
         @media only screen and (max-width: 768px) {
             main-element.welcome .left{

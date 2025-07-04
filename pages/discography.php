@@ -3,7 +3,7 @@
 <head>
     <?php include '../backend/meta-include.php'; ?>
     <link rel="stylesheet" href="../css/discography.css">
-    <title>MKA Discography</title>
+    <title>Kars' Discography</title>
 </head>
 <body>
     <main-element class="welcome">
@@ -11,65 +11,6 @@
     </main-element>
 
     <main-element class="filters">
-        <form method="get">
-            <div class="filter-container">
-                <div class="filter-group">
-                    <h3>Discography Type:</h3>
-                    <label><input type="checkbox" name="type[]" value="Album" <?php echo (isset($_GET['type']) && in_array('Album', $_GET['type'])) ? 'checked' : ''; ?>> Albums</label>
-                    <label><input type="checkbox" name="type[]" value="EP" <?php echo (isset($_GET['type']) && in_array('EP', $_GET['type'])) ? 'checked' : ''; ?>> EPs</label>
-                    <label><input type="checkbox" name="type[]" value="Single" <?php echo (isset($_GET['type']) && in_array('Single', $_GET['type'])) ? 'checked' : ''; ?>> Singles</label>
-                </div>
-                
-                <div class="filter-group">
-                    <h3>Content:</h3>
-                    <div style="display: flex; gap: 1em;">
-                    <label>
-                        <div class="custom-select">
-                            Contains Explicit Tracks:
-                            <select name="has_explicit">
-                                <option value="">-- Any --</option>
-                                <option value="yes" <?php if (($_GET['has_explicit'] ?? '') === 'yes') echo 'selected'; ?>>Yes</option>
-                                <option value="no" <?php if (($_GET['has_explicit'] ?? '') === 'no') echo 'selected'; ?>>No</option>
-                            </select>
-                        </div>
-                    </label>
-                    <label>
-                        <div class="custom-select">
-                            Has Featured Artists:
-                            <select name="has_features">
-                                <option value="">-- Any --</option>
-                                <option value="yes" <?php if (($_GET['has_features'] ?? '') === 'yes') echo 'selected'; ?>>Yes</option>
-                                <option value="no" <?php if (($_GET['has_features'] ?? '') === 'no') echo 'selected'; ?>>No</option>
-                            </select>
-                        </div>
-                    </label>
-                    <label>
-                        <div class="custom-select">
-                            Contains Breakcore:
-                            <select name="has_breakcore">
-                                <option value="">-- Any --</option>
-                                <option value="yes" <?php if (($_GET['has_breakcore'] ?? '') === 'yes') echo 'selected'; ?>>Yes</option>
-                                <option value="no" <?php if (($_GET['has_breakcore'] ?? '') === 'no') echo 'selected'; ?>>No</option>
-                            </select>
-                        </div>
-                    </label>
-                    </div>
-                    <label>
-                        <!--
-                        <div class="custom-select">
-                            Hide Non-Main Releases:
-                            <select name="hide_non_main">
-                                <option value="">-- Any --</option>
-                                <option value="yes" <?php if (($_GET['hide_non_main'] ?? '') === 'yes') echo 'selected'; ?>>Yes</option>
-                                <option value="no" <?php if (($_GET['hide_non_main'] ?? '') === 'no') echo 'selected'; ?>>No</option>
-                            </select>
-                        </div>
-                        -->
-                    </label>
-                </div>
-            </div>
-            <button type="submit">Apply Filters</button>
-        </form>
     </main-element>
 
     <main-element discography>
