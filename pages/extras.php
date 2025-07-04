@@ -21,6 +21,7 @@
             <li>Email - whitejosh429@gmail.com</li>
             <li>Name - "Josh White"</li>
         </ul>
+        <p>All online profiles link back to this site.</p>
     </main-element>
 </body>
 </html>
