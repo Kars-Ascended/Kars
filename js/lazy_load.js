@@ -1,4 +1,4 @@
-// Create intersection observer
+// Lazy load audio players in songs.php table
 document.addEventListener('DOMContentLoaded', function() {
     const options = {
         root: null,
@@ -16,46 +16,62 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }, options);
 
-    // Start observing all audio player divs
+    // Observe all audio player divs
     document.querySelectorAll('.audio-player').forEach(playerDiv => {
         observer.observe(playerDiv);
     });
 
-    // Function to load individual audio player
+    // Load audio player when in view
     function loadAudioPlayer(playerDiv) {
-        const album = encodeURIComponent(playerDiv.dataset.album);
-        const song = encodeURIComponent(playerDiv.dataset.song);
-        const era = encodeURIComponent(playerDiv.dataset.era);
-        const mp3_url = `https://gauge-flying-photos-rebecca.trycloudflare.com/discogs/${era}/${album}/${song}.mp3`;
+        // Read raw values
+        const songRaw = playerDiv.dataset.song || '';
+        const releaseRaw = playerDiv.dataset.release || '';
+        // Interpret main_release as a boolean: TRUE means main release, FALSE means demo
+        const isDemo = (playerDiv.dataset.demo === '1' || playerDiv.dataset.demo === 'TRUE' || playerDiv.dataset.demo === 'true');
+
+        let mp3_url = '';
+        if (isDemo) {
+            if (!songRaw) {
+                playerDiv.innerHTML = '<span style="color:red;">No song title</span>';
+                return;
+            }
+            const safeSong = sanitizeForWindows(songRaw);
+            mp3_url = `https://bolt-gpl-secondary-knight.trycloudflare.com/kars/discogs/demos/${encodeURIComponent(safeSong)}.mp3`;
+        } else {
+            if (!releaseRaw || !songRaw) {
+                playerDiv.innerHTML = '<span style="color:red;">Missing release or song</span>';
+                return;
+            }
+            const safeRelease = sanitizeForWindows(releaseRaw);
+            const safeSong = sanitizeForWindows(songRaw);
+            mp3_url = `https://bolt-gpl-secondary-knight.trycloudflare.com/kars/discogs/releases/${encodeURIComponent(safeRelease)}/${encodeURIComponent(safeSong)}.mp3`;
+        }
 
         const audio = document.createElement('audio');
         audio.controls = true;
         audio.innerHTML = `<source src="${mp3_url}" type="audio/mpeg">`;
-        
-        // Get current volume from settings
-        const savedVolume = parseFloat(document.cookie.split('; ')
-            .find(row => row.startsWith('audioVolume='))
-            ?.split('=')[1]) || 1;
-        audio.volume = savedVolume;
+
+        // Get current volume from cookie, fallback to 1
+        let savedVolume = 1;
+        try {
+            const match = document.cookie.match(/(?:^|;\s*)audioVolume=([^;]+)/);
+            if (match) savedVolume = parseFloat(match[1]);
+        } catch {}
+        audio.volume = isNaN(savedVolume) ? 1 : savedVolume;
 
         // Remove placeholder and add audio element
         const placeholder = playerDiv.querySelector('.audio-placeholder');
-        if (placeholder) {
-            placeholder.remove();
-        }
+        if (placeholder) placeholder.remove();
         playerDiv.appendChild(audio);
     }
 
-    // Handle column visibility toggle
-    document.querySelector('.toggle-column[data-column="3"]').addEventListener('change', function() {
-        const audioPlayers = document.querySelectorAll('.audio-player');
-        audioPlayers.forEach(player => {
-            player.style.display = this.checked ? 'block' : 'none';
-        });
-    });
+    function sanitizeForWindows(name) {
+        // Remove forbidden Windows filename characters: < > : " / \ | ? *
+        return name.replace(/[<>:"/\\|?*]/g, '');
+    }
 });
 
-// Function to set all audio elements' volume to 5%
+// Utility: Set all audio elements' volume to 5%
 function setAllAudioVolume() {
     const audioElements = document.getElementsByTagName('audio');
     const volumeLevel = 0.05;

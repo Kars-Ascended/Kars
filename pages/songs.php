@@ -24,7 +24,8 @@
                     'youtube' => 'YouTube',
                     'soundcloud' => 'SoundCloud',
                     'release_date' => 'Release Date',
-                    'main_release' => 'Main Release'
+                    'main_release' => 'Main Release',
+                    'audio_player' => 'Audio Player' // Add this line
                 ];
                 $visible = isset($_GET['columns']) ? $_GET['columns'] : array_keys($allColumns);
                 foreach ($allColumns as $col => $label) {
@@ -56,7 +57,25 @@
         while ($row = $results->fetchArray(SQLITE3_ASSOC)) {
             echo '<tr>';
             foreach ($columns as $col) {
-                echo '<td>' . htmlspecialchars($row[$col]) . '</td>';
+                if ($col === 'audio_player') {
+                    $song = isset($row['song_title']) ? $row['song_title'] : '';
+                    $is_demo = (strtoupper($row['main_release']) === 'FALSE');
+
+                    // Lookup release_ID from connections table if not a demo
+                    $release_id = '';
+                    if (!$is_demo) {
+                        $song_id = $row['song_title'];
+                        $conn_db = new SQLite3(__DIR__ . '/../db/kars.db');
+                        $escaped_song_id = $conn_db->escapeString($song_id);
+                        $conn_result = $conn_db->querySingle("SELECT release_ID FROM connections WHERE song_ID = '" . $escaped_song_id . "'");
+                        $release_id = $conn_result ? $conn_result : '';
+                        $conn_db->close();
+                    }
+
+                    echo '<td><div class="audio-player" data-song="' . htmlspecialchars($song) . '" data-release="' . htmlspecialchars($release_id) . '" data-demo="' . ($is_demo ? '1' : '0') . '"><div class="audio-placeholder">Loading...</div></div></td>';
+                } else {
+                    echo '<td>' . htmlspecialchars($row[$col]) . '</td>';
+                }
             }
             echo '</tr>';
         }
@@ -64,5 +83,7 @@
         $db->close();
         ?>
     </main-element>
+    <!-- Add this before </body> -->
+    <script src="../js/lazy_load.js?v=<?= filemtime($root . 'js/lazy_load.js') ?>"></script>
 </body>
 </html>

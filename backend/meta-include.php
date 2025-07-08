@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">  <!-- Makes it mobile-friendly -->
 
 <!-- SEO -->
-<meta name="description" content="Kars' Site --">
-<meta property="og:description" content="Kars' Site --"> 
+<meta name="description" content="Kars' Site">
+<meta property="og:description" content="Site for all music content of Kars_Ascended."> 
 <meta property="og:title" content="Kars' Site">
-<!-- <meta property="og:image" content="https://mr-kitty-archive.xyz/assets/icons/mk-logo.png"> -->
+<meta property="og:image" content="https://kars-ascended.xyz/assets/pfp.png">
 
 <!-- Page metadata -->
 <link rel="icon" href="/assets/pfp.png" type="image/x-icon">

@@ -50,6 +50,8 @@ function importCsv($db, $csvFile, $table, $columns) {
     $placeholders = implode(',', array_fill(0, count($columns), '?'));
     $stmt = $db->prepare("INSERT INTO $table (" . implode(',', $columns) . ") VALUES ($placeholders)");
     while (($data = fgetcsv($handle)) !== false) {
+        // Only use as many columns as expected
+        $data = array_slice($data, 0, count($columns));
         // Pad data if row is short
         $data = array_pad($data, count($columns), null);
         $stmt->execute($data);
