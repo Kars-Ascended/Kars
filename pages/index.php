@@ -23,7 +23,7 @@
 
     <main-element>
         <h2>Hi, I'm Kars</h2>
-        <p>This site will be pretty lacking and empty as i dont have much content to put here yet, mainly just for the spotify account verification <a href="/extras.php">(Here btw)</a></p>
+        <p>This site will be pretty lacking and empty as i dont have much content to put here yet</p>
     </main-element>
 </body>
 </html>
