@@ -8,34 +8,32 @@ $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 // Create tables with correct columns
 $db->exec("
+    CREATE TABLE IF NOT EXISTS releases (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        release_title TEXT UNIQUE,
+        type TEXT,
+        release_date TEXT,
+        main_release TEXT DEFAULT 'TRUE'
+    );
     CREATE TABLE IF NOT EXISTS songs (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         song_title TEXT,
+        release_title TEXT,
+        release_type TEXT,
+        track_number INTEGER,
         duration TEXT,
         lyrics TEXT,
         spotify TEXT,
         youtube TEXT,
         soundcloud TEXT,
         release_date TEXT,
-        main_release TEXT
-    );
-    CREATE TABLE IF NOT EXISTS releases (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        release_title TEXT,
-        type TEXT,
-        release_date TEXT
-    );
-    CREATE TABLE IF NOT EXISTS connections (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        song_ID TEXT,
-        release_ID TEXT,
-        track_number INTEGER,
-        main_release TEXT
+        main_release TEXT,
+        FOREIGN KEY(release_title) REFERENCES releases(release_title)
     );
 ");
 
 // Helper function to import CSV
-function importCsv($db, $csvFile, $table, $columns) {
+function importCsv($db, $csvFile, $table, $columnMap) {
     if (!file_exists($csvFile)) {
         echo "File not found: $csvFile\n";
         return;
@@ -45,39 +43,73 @@ function importCsv($db, $csvFile, $table, $columns) {
         echo "Could not open $csvFile\n";
         return;
     }
+    
     // Skip header
-    fgetcsv($handle);
-    $placeholders = implode(',', array_fill(0, count($columns), '?'));
-    $stmt = $db->prepare("INSERT INTO $table (" . implode(',', $columns) . ") VALUES ($placeholders)");
+    $headers = fgetcsv($handle);
+    
+    // Map CSV columns to database columns
+    $columnIndexes = array();
+    $dbColumns = array();
+    foreach ($columnMap as $csvCol => $dbCol) {
+        $index = array_search($csvCol, $headers);
+        if ($index !== false) {
+            $columnIndexes[] = $index;
+            $dbColumns[] = $dbCol;
+        }
+    }
+    
+    $placeholders = implode(',', array_fill(0, count($dbColumns), '?'));
+    $stmt = $db->prepare("INSERT INTO $table (" . implode(',', $dbColumns) . ") VALUES ($placeholders)");
+    
     while (($data = fgetcsv($handle)) !== false) {
-        // Only use as many columns as expected
-        $data = array_slice($data, 0, count($columns));
-        // Pad data if row is short
-        $data = array_pad($data, count($columns), null);
-        $stmt->execute($data);
+        $rowData = array_map(function($index) use ($data) {
+            return $index !== false ? $data[$index] : null;
+        }, $columnIndexes);
+        
+        try {
+            $stmt->execute($rowData);
+        } catch (Exception $e) {
+            echo "Error importing row: " . implode(',', $rowData) . "\n";
+            echo $e->getMessage() . "\n";
+        }
     }
     fclose($handle);
     echo "Imported $csvFile into $table\n";
 }
 
-// Import each CSV with correct columns
-importCsv(
-    $db,
-    __DIR__ . '/../data/Kars_Ascended Music - songs.csv',
-    'songs',
-    ['song_title', 'duration', 'lyrics', 'spotify', 'youtube', 'soundcloud', 'release_date', 'main_release']
-);
+// Clear existing data
+$db->exec("DELETE FROM songs; DELETE FROM releases; DELETE FROM sqlite_sequence;");
+
+// Import releases
 importCsv(
     $db,
     __DIR__ . '/../data/Kars_Ascended Music - releases.csv',
     'releases',
-    ['release_title', 'type', 'release_date']
+    [
+        'release_title' => 'release_title',
+        'type' => 'type',
+        'release_date' => 'release_date'
+    ]
 );
+
+// Import songs
 importCsv(
     $db,
-    __DIR__ . '/../data/Kars_Ascended Music - connections.csv',
-    'connections',
-    ['song_ID', 'release_ID', 'track_number', 'main_release']
+    __DIR__ . '/../data/Kars_Ascended Music - songs.csv',
+    'songs',
+    [
+        'song_title' => 'song_title',
+        'release_ID' => 'release_title',  // Map release_ID to release_title
+        'release_type' => 'release_type',
+        'track_number' => 'track_number',
+        'duration' => 'duration',
+        'lyrics' => 'lyrics',
+        'spotify' => 'spotify',
+        'youtube' => 'youtube',
+        'soundcloud' => 'soundcloud',
+        'release_date' => 'release_date',
+        'main_release' => 'main_release'
+    ]
 );
 
 echo "Import complete.\n";

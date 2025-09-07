@@ -11,6 +11,11 @@
     </main-element>
 
     <main-element class="filters">
+        <label>
+            <input type="checkbox" id="show-main-releases" checked>
+            Show Main Releases Only
+        </label>
+        <input type="text" id="search-releases" placeholder="Search releases...">
     </main-element>
 
     <main-element discography>
@@ -29,7 +34,11 @@
                     $year = date('Y', strtotime($releaseDate));
                     $fullDate = date('F j, Y', strtotime($releaseDate));
                 }
-                echo '<a href="/pages/songs.php?album=' . $titleEncoded . '" class="timeline-item" data-album="' . htmlspecialchars($row['release_title']) . '" data-type="' . htmlspecialchars($row['type']) . '">';
+                $mainRelease = isset($row['main_release']) ? strtolower(trim($row['main_release'])) : 'true';
+                echo '<a href="/pages/songs.php?album=' . $titleEncoded . '" class="timeline-item" 
+                    data-album="' . htmlspecialchars($row['release_title']) . '" 
+                    data-type="' . htmlspecialchars($row['type']) . '"
+                    data-main-release="' . htmlspecialchars($mainRelease) . '">';
                 echo '<div class="timeline-content">';
                 echo '<div class="timeline-date">' . $year . '</div>';
                 echo '<h3>' . htmlspecialchars($row['release_title']) . '</h3>';
@@ -44,15 +53,38 @@
         </div>
     </main-element>
     <script>
+        // Image loading
         document.querySelectorAll('.timeline-item').forEach(item => {
-            console.log('Processing:', item.dataset.album, item.dataset.type, item); // Debug line
             let album = item.dataset.album
-                .replace(/[^a-zA-Z0-9 ]/g, '') // remove special chars
-                .replace(/ /g, '_'); // replace spaces with underscores
+                .replace(/[^a-zA-Z0-9 ]/g, '')
+                .replace(/ /g, '_');
             const type = item.dataset.type;
-            const imagePath = `../assets/covers/${type}/${album}.png`;
+            const imagePath = `../assets/covers/${album}.png`;
             item.style.backgroundImage = `url('${imagePath}')`;
         });
+
+        // Filtering logic
+        const mainReleaseCheckbox = document.getElementById('show-main-releases');
+        const searchInput = document.getElementById('search-releases');
+
+        function filterReleases() {
+            const showMainOnly = mainReleaseCheckbox.checked;
+            const searchTerm = searchInput.value.toLowerCase();
+
+            document.querySelectorAll('.timeline-item').forEach(item => {
+                const isMain = item.dataset.mainRelease === 'true';
+                const title = item.dataset.album.toLowerCase();
+                
+                let visible = true;
+                if (showMainOnly && !isMain) visible = false;
+                if (searchTerm && !title.includes(searchTerm)) visible = false;
+                
+                item.style.display = visible ? '' : 'none';
+            });
+        }
+
+        mainReleaseCheckbox.addEventListener('change', filterReleases);
+        searchInput.addEventListener('input', filterReleases);
     </script>
 </body>
 </html>

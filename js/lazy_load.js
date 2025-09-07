@@ -26,26 +26,15 @@ document.addEventListener('DOMContentLoaded', function() {
         // Read raw values
         const songRaw = playerDiv.dataset.song || '';
         const releaseRaw = playerDiv.dataset.release || '';
-        // Interpret main_release as a boolean: TRUE means main release, FALSE means demo
-        const isDemo = (playerDiv.dataset.demo === '1' || playerDiv.dataset.demo === 'TRUE' || playerDiv.dataset.demo === 'true');
-
-        let mp3_url = '';
-        if (isDemo) {
-            if (!songRaw) {
-                playerDiv.innerHTML = '<span style="color:red;">No song title</span>';
-                return;
-            }
-            const safeSong = sanitizeForWindows(songRaw);
-            mp3_url = `https://bolt-gpl-secondary-knight.trycloudflare.com/kars/discogs/demos/${encodeURIComponent(safeSong)}.mp3`;
-        } else {
-            if (!releaseRaw || !songRaw) {
-                playerDiv.innerHTML = '<span style="color:red;">Missing release or song</span>';
-                return;
-            }
-            const safeRelease = sanitizeForWindows(releaseRaw);
-            const safeSong = sanitizeForWindows(songRaw);
-            mp3_url = `https://bolt-gpl-secondary-knight.trycloudflare.com/kars/discogs/releases/${encodeURIComponent(safeRelease)}/${encodeURIComponent(safeSong)}.mp3`;
+        
+        if (!songRaw || !releaseRaw) {
+            playerDiv.innerHTML = '<span style="color:red;">Missing song or release info</span>';
+            return;
         }
+
+        const safeSong = sanitizeForWindows(songRaw);
+        const safeRelease = sanitizeForWindows(releaseRaw);
+        const mp3_url = `https://neo-reserves-deployment-stage.trycloudflare.com/kars/discogs/${encodeURIComponent(safeRelease)}/${encodeURIComponent(safeSong)}.mp3`;
 
         const audio = document.createElement('audio');
         audio.controls = true;
