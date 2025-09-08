@@ -35,7 +35,7 @@
                     $fullDate = date('F j, Y', strtotime($releaseDate));
                 }
                 $mainRelease = isset($row['main_release']) ? strtolower(trim($row['main_release'])) : 'true';
-                echo '<a href="/pages/songs.php?album=' . $titleEncoded . '" class="timeline-item" 
+                echo '<a href="/pages/songs.php?search=' . $titleEncoded . '" class="timeline-item" 
                     data-album="' . htmlspecialchars($row['release_title']) . '" 
                     data-type="' . htmlspecialchars($row['type']) . '"
                     data-main-release="' . htmlspecialchars($mainRelease) . '">';
